@@ -9,19 +9,19 @@ const key = process.env.SECRET_KEY;
 
 //signup
 userRouter.post("/signup", async (req, res) => {
-  const { userName, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   const result = await UserModel.findOne({ email });
   if (result) {
     res.send({ msg: "email already exists" });
-  }
-  else {
+  } else {
     bcrypt.hash(password, 5, async function (err, hash) {
       if (err) {
         res.send({ msg: "something went wrong, please try again" });
       }
 
       const new_user = new UserModel({
-        userName: userName,
+        firstName: firstName,
+        lastName: lastName,
         email: email,
         password: hash,
       });
